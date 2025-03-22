@@ -176,9 +176,9 @@ namespace bitrpc
                 ELOG("服务请求中没有操作类型或操作类型的类型错误！");
                 return false;
             }
-            if (_body[KEY_OPTYPE].asInt() != (int)(ServiceOptype::SERVICE_DISCOVERY) &&
+            if (_body[KEY_OPTYPE].asInt() != (int)(ServiceOptype::SERVICE_DISCOVERY) && //判断在不在，然后再判断类型
                 (_body[KEY_HOST].isNull() == true ||
-                 _body[KEY_HOST].isObject() == false ||
+                 _body[KEY_HOST].isObject() == false || //检查 Json::Value 对象是否为 JSON 对象类型。
                  _body[KEY_HOST][KEY_HOST_IP].isNull() == true ||
                  _body[KEY_HOST][KEY_HOST_IP].isString() == false ||
                  _body[KEY_HOST][KEY_HOST_PORT].isNull() == true ||
@@ -206,7 +206,7 @@ namespace bitrpc
         {
             _body[KEY_OPTYPE] = (int)optype;
         }
-        Address host()
+        Address host() //获取主机地址
         {
             Address addr;
             addr.first = _body[KEY_HOST][KEY_HOST_IP].asString();
