@@ -22,14 +22,15 @@ namespace bitrpc
 #define KEY_RCODE "rcode"//响应状态码
 #define KEY_RESULT "result"//响应结果
 
+    //消息类型
     enum class MType
     {
-        REQ_RPC = 0,
-        RSP_RPC,
-        REQ_TOPIC,
-        RSP_TOPIC,
-        REQ_SERVICE,
-        RSP_SERVICE
+        REQ_RPC = 0, //请求rpc
+        RSP_RPC,     //响应rpc
+        REQ_TOPIC,   //请求主题
+        RSP_TOPIC,   //响应主题
+        REQ_SERVICE,  //请求服务
+        RSP_SERVICE   //响应服务
     };
 
     enum class RCode
@@ -65,13 +66,15 @@ namespace bitrpc
         }
         return it->second;
     }
-
+    
+    //RPC请求类型定义
     enum class RType
     {
         REQ_ASYNC = 0,
         REQ_CALLBACK
     };
 
+    //主题操作类型定义
     enum class TopicOptype
     {
         TOPIC_CREATE = 0,
@@ -81,6 +84,7 @@ namespace bitrpc
         TOPIC_PUBLISH
     };
 
+    //服务操作类型定义
     enum class ServiceOptype
     {
         SERVICE_REGISTRY = 0,
