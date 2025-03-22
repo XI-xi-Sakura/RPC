@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ubuntu/bitrpc/third/muduo-master/muduo/base/Atomic.h
+muduo/base/noncopyable.h
+/home/ubuntu/bitrpc/third/muduo-master/muduo/base/muduo/base/noncopyable.h
+stdint.h
+-
+
+/home/ubuntu/bitrpc/third/muduo-master/muduo/base/noncopyable.h
+
+/home/ubuntu/bitrpc/third/muduo-master/muduo/base/tests/Atomic_unittest.cc
+muduo/base/Atomic.h
+/home/ubuntu/bitrpc/third/muduo-master/muduo/base/tests/muduo/base/Atomic.h
+assert.h
+-
+
