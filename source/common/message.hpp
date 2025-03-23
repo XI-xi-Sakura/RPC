@@ -64,6 +64,7 @@ namespace bitrpc
         }
     };
 
+    // Request
     class RpcRequest : public JsonRequest
     {
     public:
@@ -87,7 +88,7 @@ namespace bitrpc
         }
         std::string method()
         {
-            return _body[KEY_METHOD].asString();//将 Json::Value 对象转换为 std::string 类型
+            return _body[KEY_METHOD].asString(); // 将 Json::Value 对象转换为 std::string 类型
         }
         void setMethod(const std::string &method_name)
         {
@@ -176,9 +177,9 @@ namespace bitrpc
                 ELOG("服务请求中没有操作类型或操作类型的类型错误！");
                 return false;
             }
-            if (_body[KEY_OPTYPE].asInt() != (int)(ServiceOptype::SERVICE_DISCOVERY) && //判断在不在，然后再判断类型
-                (_body[KEY_HOST].isNull() == true ||
-                 _body[KEY_HOST].isObject() == false || //检查 Json::Value 对象是否为 JSON 对象类型。
+            if (_body[KEY_OPTYPE].asInt() != (int)(ServiceOptype::SERVICE_DISCOVERY) && // 判断是否是服务发现，服务发现没有host字段
+                (_body[KEY_HOST].isNull() == true ||                                    // 判断在不在，然后再判断类型
+                 _body[KEY_HOST].isObject() == false ||                                 // 检查 Json::Value 对象是否为 JSON 对象类型。
                  _body[KEY_HOST][KEY_HOST_IP].isNull() == true ||
                  _body[KEY_HOST][KEY_HOST_IP].isString() == false ||
                  _body[KEY_HOST][KEY_HOST_PORT].isNull() == true ||
@@ -206,7 +207,7 @@ namespace bitrpc
         {
             _body[KEY_OPTYPE] = (int)optype;
         }
-        Address host() //获取主机地址
+        Address host() // 获取主机地址
         {
             Address addr;
             addr.first = _body[KEY_HOST][KEY_HOST_IP].asString();
@@ -222,6 +223,7 @@ namespace bitrpc
         }
     };
 
+    // Response
     class RpcResponse : public JsonResponse
     {
     public:
@@ -308,6 +310,8 @@ namespace bitrpc
                 val[KEY_HOST_IP] = addr.first;
                 val[KEY_HOST_PORT] = addr.second;
                 _body[KEY_HOST].append(val);
+                // _body[KEY_HOST] 是一个 Json::Value 对象，它是一个 JSON 数组。
+                // 用来存储多个Address对象的信息。
             }
         }
         std::vector<Address> hosts()
@@ -352,7 +356,7 @@ namespace bitrpc
         template <typename T, typename... Args>
         static std::shared_ptr<T> create(Args &&...args)
         {
-            return std::make_shared<T>(std::forward(args)...);
+            return std::make_shared<T>(std::forward(args)...);//完美转发，展开参数包
         }
     };
 }
