@@ -131,6 +131,7 @@ namespace bitrpc
             std::string id = msg->rid();
             auto mtype = htonl((int32_t)msg->mtype());
             int32_t idlen = htonl(id.size());
+            //这里先预存储消息的总长度，然后再将其转换为网络字节序，然后再将其写入到缓冲区中
             int32_t h_total_len = mtypeFieldsLength + idlenFieldsLength + id.size() + body.size();
             int32_t n_total_len = htonl(h_total_len);
             // DLOG("h_total_len:%d", h_total_len);
@@ -309,7 +310,7 @@ namespace bitrpc
                     return;
                 }
                 // DLOG("消息反序列化成功！")
-                
+
                 BaseConnection::ptr base_conn;
                 {
                     std::unique_lock<std::mutex> lock(_mutex);
