@@ -24,7 +24,7 @@ namespace bitrpc
 
 #define LDEFAULT LDBG
 
-#define LOG(level, format, ...)                                                                       \
+#define LOG(level, format, ...) //定义LOG日志，便于调试                                                 \
     {                                                                                                 \
         if (level >= LDEFAULT)                                                                        \
         {                                                                                             \

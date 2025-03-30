@@ -27,7 +27,7 @@ namespace bitrpc
     //     virtual std::string retrieveAsString(size_t len) = 0;    // 根据长度取出完整消息
     // };
 
-    class MuduoBuffer : public BaseBuffer
+    class MuduoBuffer : public BaseBuffer          //从文件缓冲区中读取数据操作
     {
     public:
         // 调用moduo库中的缓冲区类接口函数
@@ -77,14 +77,14 @@ namespace bitrpc
     //     virtual bool onMessage(const BaseBuffer::ptr &buf, BaseMessage::ptr &msg) = 0; // 处理数据
     //     virtual std::string serialize(const BaseMessage::ptr &msg) = 0;                // 序列化
     // };
-    class LVProtocol : public BaseProtocol
+    class LVProtocol : public BaseProtocol                //对缓冲区中的数据进行处理
     {
     public:
         // |--Len--|--VALUE--|
         // |--Len--|--mtype--|--idlen--|--id--|--body--|
         using ptr = std::shared_ptr<LVProtocol>;
         // 判断缓冲区中的数据量是否足够一条消息的处理
-        virtual bool canProcessed(const BaseBuffer::ptr &buf) override
+        virtual bool canProcessed(const BaseBuffer::ptr &buf) override                // 能否处理数据
         {
             if (buf->readableSize() < lenFieldsLength)
             {
@@ -98,7 +98,7 @@ namespace bitrpc
             }
             return true;
         }
-        virtual bool onMessage(const BaseBuffer::ptr &buf, BaseMessage::ptr &msg) override
+        virtual bool onMessage(const BaseBuffer::ptr &buf, BaseMessage::ptr &msg) override  // 处理数据
         {
             // |--Len--|--mtype--|--idlen--|--id--|--body--|
             // 当调用onMessage的时候，默认认为缓冲区中的数据足够一条完整的消息
@@ -124,7 +124,7 @@ namespace bitrpc
             msg->setMType(mtype);
             return true;
         }
-        virtual std::string serialize(const BaseMessage::ptr &msg) override
+        virtual std::string serialize(const BaseMessage::ptr &msg) override   // 序列化
         {
             // |--Len--|--mtype--|--idlen--|--id--|--body--|
             std::string body = msg->serialize();
@@ -168,7 +168,7 @@ namespace bitrpc
     //     virtual bool connected() = 0;                       // 是否连接
     // };
 
-    class MuduoConnection : public BaseConnection
+    class MuduoConnection : public BaseConnection             // 连接对象
     {
     public:
         using ptr = std::shared_ptr<MuduoConnection>;
