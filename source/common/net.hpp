@@ -257,7 +257,7 @@ namespace bitrpc
                 auto muduo_conn = ConnectionFactory::create(conn, _protocol);
                 {
                     std::unique_lock<std::mutex> lock(_mutex);
-                    _conns.insert(std::make_pair(conn, muduo_conn));
+                    _conns.insert(std::make_pair(conn, muduo_conn));//建立映射关系
                 }
                 if (_cb_connection)
                     _cb_connection(muduo_conn);
@@ -289,7 +289,7 @@ namespace bitrpc
                 if (_protocol->canProcessed(base_buf) == false)
                 {
                     // 数据不足
-                    if (base_buf->readableSize() > maxDataSize)
+                    if (base_buf->readableSize() > maxDataSize)//数据量过大且不是一条完整的消息
                     {
                         conn->shutdown();
                         ELOG("缓冲区中数据过大！");
@@ -298,6 +298,7 @@ namespace bitrpc
                     // DLOG("数据量不足！");
                     break;
                 }
+
                 // DLOG("缓冲区中数据可处理！");
                 BaseMessage::ptr msg;
                 bool ret = _protocol->onMessage(base_buf, msg);
@@ -308,6 +309,7 @@ namespace bitrpc
                     return;
                 }
                 // DLOG("消息反序列化成功！")
+                
                 BaseConnection::ptr base_conn;
                 {
                     std::unique_lock<std::mutex> lock(_mutex);
