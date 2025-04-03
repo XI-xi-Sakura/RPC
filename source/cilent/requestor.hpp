@@ -4,6 +4,16 @@
 #include <future>
 #include <functional>
 
+//根本逻辑：
+//1.客户端发送请求，构造请求描述对象，将请求描述对象添加到请求描述表_request_desc中。
+//2.客户端等待响应，等待响应的方式有两种：
+//  2.1 异步调用：客户端发送请求后，等待响应，然后将响应结果设置到 promise<BaseMessage::ptr> rdp->response 中。
+//  2.2 回调函数：客户端发送请求后，等待响应，然后callback(msg)。
+//3.客户端收到响应，从请求描述表中查找对应的请求描述对象，然后将响应结果设置到 promise<BaseMessage::ptr> rdp->response 中。
+//4.客户端从 promise<BaseMessage::ptr> rdp->response 中获取响应结果。
+//5.客户端从请求描述表中删除对应的请求描述对象。
+
+
 namespace bitrpc
 {
     namespace client
