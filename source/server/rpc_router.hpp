@@ -7,18 +7,18 @@ namespace bitrpc
     namespace server
     { // 再加上server命名空间，客户端与服务端部分代码功能类似，避免命名冲突
 
-        enum class VType
-        {             // 枚举类
-            BOOL = 0, // 枚举出rpc请求参数类型
+        enum class VType // 枚举出rpc请求参数类型
+        {                // 枚举类
+            BOOL = 0,
             INTEGRAL,
             NUMERIC,
             STRING,
             ARRAY,
             OBJECT,
         };
-        class ServiceDescribe
-        { // 服务描述类
-          // 服务描述类：描述业务回调，参数，返回值类型，并且提供参数检验接口
+        class ServiceDescribe // 服务描述类：描述业务回调，参数，返回值类型，并且提供参数检验接口
+        {                     // 服务描述类
+
         public:
             using ptr = std::shared_ptr<ServiceDescribe>;
             using ServiceCallback = std::function<void(const Json::Value &, Json::Value &)>;
@@ -123,8 +123,8 @@ namespace bitrpc
             VType _return_type;                                        // 结果作为返回值类型的描述
         };
 
-        class ServiceManager
-        { // 服务管理类
+        class ServiceManager // 服务管理类
+        {
         public:
             using ptr = std::shared_ptr<ServiceManager>;
             void insert(const ServiceDescribe::ptr &desc)
