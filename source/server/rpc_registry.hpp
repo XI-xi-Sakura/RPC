@@ -203,6 +203,7 @@ namespace bitrpc
                 msg_req->setMethod(method);
                 msg_req->setHost(host);
                 msg_req->setOptype(optype);
+                
                 for (auto &discoverer : it->second)
                 {
                     discoverer->conn->send(msg_req);
