@@ -42,7 +42,7 @@ namespace bitrpc
         RCODE_DISCONNECTED,
         RCODE_INVALID_PARAMS,
         RCODE_NOT_FOUND_SERVICE,
-        RCODE_INVALID_OPTYPE,
+        RCODE_INVALID_OPTYPE, //无效的操作类型
         RCODE_NOT_FOUND_TOPIC,
         RCODE_INTERNAL_ERROR
     };
