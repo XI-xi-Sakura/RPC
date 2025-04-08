@@ -17,6 +17,7 @@ namespace bitrpc
             Provider(const Requestor::ptr &requestor) : _requestor(requestor) {}
             bool registryMethod(const BaseConnection::ptr &conn, const std::string &method, const Address &host)
             {
+                // 发送信息
                 auto msg_req = MessageFactory::create<ServiceRequest>();
                 msg_req->setId(UUID::uuid());
                 msg_req->setMType(MType::REQ_SERVICE);
@@ -28,6 +29,7 @@ namespace bitrpc
 
                 bool ret = _requestor->send(conn, msg_req, msg_rsp);
 
+                // 分析返回结果
                 if (ret == false)
                 {
                     ELOG("%s 服务注册失败！", method.c_str());
@@ -53,18 +55,20 @@ namespace bitrpc
             Requestor::ptr _requestor;
         };
 
-        class MethodHost // DD轮巡，负载均衡
+        class MethodHost // DD轮巡，负载均衡，底层容器为vector
         {
         public:
             using ptr = std::shared_ptr<MethodHost>;
             MethodHost() : _idx(0) {}
             MethodHost(const std::vector<Address> &hosts) : _hosts(hosts.begin(), hosts.end()), _idx(0) {}
+            // 服务增加
             void appendHost(const Address &host)
             {
                 // 中途收到了服务上线请求后被调用
                 std::unique_lock<std::mutex> lock(_mutex);
                 _hosts.push_back(host);
             }
+            // 服务删除
             void removeHost(const Address &host)
             {
                 // 中途收到了服务下线请求后被调用
@@ -78,6 +82,8 @@ namespace bitrpc
                     }
                 }
             }
+            // 轮巡，负载均衡
+
             Address chooseHost()
             {
                 std::unique_lock<std::mutex> lock(_mutex);
@@ -118,7 +124,8 @@ namespace bitrpc
                         }
                     }
                 }
-                // 当前服务的提供者为空
+                // 有可能走到这里，代表当前服务的提供者为空
+                // 发送服务发现请求
                 auto msg_req = MessageFactory::create<ServiceRequest>();
                 msg_req->setId(UUID::uuid());
                 msg_req->setMType(MType::REQ_SERVICE);
@@ -142,7 +149,8 @@ namespace bitrpc
                     ELOG("服务发现失败！%s", errReason(service_rsp->rcode()).c_str());
                     return false;
                 }
-                // 能走到这里，代表当前是没有对应的服务提供主机的
+
+                // 将返回结果的主机信息保存起来
                 std::unique_lock<std::mutex> lock(_mutex);
                 auto method_host = std::make_shared<MethodHost>(service_rsp->hosts());
                 if (method_host->empty())
@@ -150,6 +158,7 @@ namespace bitrpc
                     ELOG("%s 服务发现失败！没有能够提供服务的主机！", method.c_str());
                     return false;
                 }
+
                 host = method_host->chooseHost();
                 _method_hosts[method] = method_host;
                 return true;
@@ -189,7 +198,7 @@ namespace bitrpc
                         return;
                     }
                     it->second->removeHost(msg->host());
-                    _offline_callback(msg->host());   // TODO
+                    _offline_callback(msg->host()); // TODO
                 }
             }
 
