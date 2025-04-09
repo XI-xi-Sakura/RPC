@@ -105,7 +105,8 @@ namespace bitrpc
         class Discoverer
         {
         public:
-            using OfflineCallback = std::function<void(const Address &)>;
+            using OfflineCallback = std::function<void(const Address &)>; // 服务下线回调函数类型
+
             using ptr = std::shared_ptr<Discoverer>;
             Discoverer(const Requestor::ptr &requestor, const OfflineCallback &cb) : _requestor(requestor), _offline_callback(cb) {}
             // 服务发现
@@ -198,7 +199,8 @@ namespace bitrpc
                         return;
                     }
                     it->second->removeHost(msg->host());
-                    _offline_callback(msg->host()); // TODO
+                    
+                    _offline_callback(msg->host()); // 服务下线回调函数
                 }
             }
 

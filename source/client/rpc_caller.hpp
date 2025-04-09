@@ -5,7 +5,7 @@ namespace bitrpc
 {
     namespace client
     {
-        class RpcCaller // 向用户提供进⾏rpc调⽤的模块，处理用户的请求
+        class RpcCaller // 向用户提供进行rpc调⽤的模块，处理用户的请求
         {
         public:
             using ptr = std::shared_ptr<RpcCaller>;

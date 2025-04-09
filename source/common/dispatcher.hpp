@@ -27,7 +27,8 @@ namespace bitrpc
     private:
         MessageCallback _handler;
     };
-    class Dispatcher
+    class Dispatcher  //消息分发
+    
     {
     public:
         using ptr = std::shared_ptr<Dispatcher>;
