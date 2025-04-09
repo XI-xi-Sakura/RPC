@@ -79,9 +79,10 @@ namespace bitrpc {
                     _server->start();
                 }
             private:
-                bool _enableRegistry;
-                Address _access_addr;
-                client::RegistryClient::ptr _reg_client;
+                bool _enableRegistry;  //是否启用服务注册
+                Address _access_addr;   
+                client::RegistryClient::ptr _reg_client;//注册客户端    
+
                 RpcRouter::ptr _router;
                 Dispatcher::ptr _dispatcher;
                 BaseServer::ptr _server;

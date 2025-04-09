@@ -1,6 +1,6 @@
-#include "../../common/dispatcher.hpp"
-#include "../../client/requestor.hpp"
-#include "../../client/rpc_caller.hpp"
+#include "../source/common/dispatcher.hpp"
+#include "../source/client/requestor.hpp"
+#include "../source/client/rpc_caller.hpp"
 
 
 int main() {

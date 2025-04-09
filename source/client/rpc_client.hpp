@@ -27,7 +27,7 @@ namespace bitrpc
                 _client->setMessageCallback(message_cb);
                 _client->connect();
             }
-            // 向外提供的服务注册接口
+            // 向外提供的向注册中心提供的服务注册接口
             bool registryMethod(const std::string &method, const Address &host)
             {
                 return _provider->registryMethod(_client->connection(), method, host);

@@ -185,6 +185,7 @@ namespace bitrpc
                 // 4. 处理完毕得到结果，组织响应，向客户端发送
                 return response(conn, request, result, RCode::RCODE_OK);
             }
+            //管理服务端的可调用服务
             void registerMethod(const ServiceDescribe::ptr &service)
             {
                 return _service_manager->insert(service);
