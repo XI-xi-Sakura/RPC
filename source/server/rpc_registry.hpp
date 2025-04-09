@@ -224,9 +224,10 @@ namespace bitrpc
                           _discoverers(std::make_shared<DiscovererManager>())
             {
             }
+            // 服务操作请求：服务注册/服务发现
             void onServiceRequest(const BaseConnection::ptr &conn, const ServiceRequest::ptr &msg)
             {
-                // 服务操作请求：服务注册/服务发现/
+                
                 ServiceOptype optype = msg->optype();
 
                 // 服务注册：
