@@ -1,5 +1,6 @@
 #include "../../source/common/detail.hpp"
 #include "../../source/client/rpc_client.hpp"
+#include <iostream>
 
 void callback(const Json::Value &result) {
     ILOG("callback result: %d", result.asInt());
@@ -30,9 +31,6 @@ int main()
     params["num2"] = 66;
     ret = client.call("Add", params, callback);
     DLOG("-------\n");
-
-
-    
     std::this_thread::sleep_for(std::chrono::seconds(1));
     return 0;
 }
