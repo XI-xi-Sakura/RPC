@@ -186,7 +186,7 @@ namespace bitrpc
         }
         virtual bool connected() override
         {
-            _conn->connected();
+            return _conn->connected();
         }
 
     private:
@@ -406,7 +406,7 @@ namespace bitrpc
                 return false;
             }
             _conn->send(msg);
-            
+            return true;
         }
         virtual BaseConnection::ptr connection() override
         {

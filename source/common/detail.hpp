@@ -15,7 +15,7 @@
 #include <atomic>
 #include <iomanip>
 #include <jsoncpp/json/json.h>
-
+#include <type_traits>
 namespace bitrpc
 {
 #define LDBG 0
@@ -24,8 +24,10 @@ namespace bitrpc
 
 #define LDEFAULT LDBG
 
-//定义LOG日志，便于调试 
-#define LOG(level, format, ...)                                                 \
+
+
+// 定义LOG日志，便于调试
+#define LOG(level, format, ...)                                                                       \
     {                                                                                                 \
         if (level >= LDEFAULT)                                                                        \
         {                                                                                             \
