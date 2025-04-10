@@ -1,7 +1,7 @@
-#include "../../common/message.hpp"
-#include "../../common/net.hpp"
-#include "../../common/dispatcher.hpp"
-#include "../../server/rpc_router.hpp"
+#include "../../source/common/message.hpp"
+#include "../../source/common/net.hpp"
+#include "../../source/common/dispatcher.hpp"
+#include "../../source/server/rpc_router.hpp"
 
 void Add(const Json::Value &req, Json::Value &rsp)
 {

@@ -153,8 +153,9 @@ namespace bitrpc
             std::unordered_map<std::string, ServiceDescribe::ptr> _services;
         };
 
+        // 对外RpcRouter类，两点功能：1.注册服务，2.处理rpc请求
         class RpcRouter
-        { // 对外RpcRouter类，两点功能：1.注册服务，2.处理rpc请求
+        { 
         public:
             using ptr = std::shared_ptr<RpcRouter>;
             RpcRouter() : _service_manager(std::make_shared<ServiceManager>()) {}
