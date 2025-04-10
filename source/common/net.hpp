@@ -406,6 +406,7 @@ namespace bitrpc
                 return false;
             }
             _conn->send(msg);
+            
         }
         virtual BaseConnection::ptr connection() override
         {
