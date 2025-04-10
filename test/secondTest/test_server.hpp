@@ -9,6 +9,7 @@ void Add(const Json::Value &req, Json::Value &rsp) {
 int main()
 {
     std::unique_ptr<bitrpc::server::SDescribeFactory> desc_factory(new bitrpc::server::SDescribeFactory());
+    
     desc_factory->setMethodName("Add");
     desc_factory->setParamsDesc("num1", bitrpc::server::VType::INTEGRAL);
     desc_factory->setParamsDesc("num2", bitrpc::server::VType::INTEGRAL);
