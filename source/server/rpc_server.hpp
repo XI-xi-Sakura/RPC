@@ -2,7 +2,7 @@
 #include "../client/rpc_client.hpp"
 #include "rpc_router.hpp"
 #include "rpc_registry.hpp"
-
+#include "rpc_topic.hpp"
 namespace bitrpc
 {
     namespace server
@@ -94,6 +94,42 @@ namespace bitrpc
             client::RegistryClient::ptr _reg_client; // 注册客户端
 
             RpcRouter::ptr _router;
+            Dispatcher::ptr _dispatcher;
+            BaseServer::ptr _server;
+        };
+
+        class TopicServer
+        {
+        public:
+            using ptr = std::shared_ptr<TopicServer>;
+            TopicServer(int port) : _topic_manager(std::make_shared<TopicManager>()),
+                                    _dispatcher(std::make_shared<bitrpc::Dispatcher>())
+            {
+                auto topic_cb = std::bind(&TopicManager::onTopicRequest, _topic_manager.get(),
+                                          std::placeholders::_1, std::placeholders::_2);
+                _dispatcher->registerHandler<TopicRequest>(MType::REQ_TOPIC, topic_cb);
+
+                _server = bitrpc::ServerFactory::create(port);
+                auto message_cb = std::bind(&bitrpc::Dispatcher::onMessage, _dispatcher.get(),
+                                            std::placeholders::_1, std::placeholders::_2);
+                _server->setMessageCallback(message_cb);
+
+                auto close_cb = std::bind(&TopicServer::onConnShutdown, this, std::placeholders::_1);
+                _server->setCloseCallback(close_cb);
+            }
+            void start()
+            {
+                _server->start();
+            }
+
+        private:
+            void onConnShutdown(const BaseConnection::ptr &conn)
+            {
+                _topic_manager->onShutdown(conn);
+            }
+
+        private:
+            TopicManager::ptr _topic_manager;
             Dispatcher::ptr _dispatcher;
             BaseServer::ptr _server;
         };
