@@ -45,7 +45,7 @@ namespace bitrpc
                 }
                 if (rpc_rsp_msg->rcode() != RCode::RCODE_OK)
                 {
-                    ELOG("rpc请求出错：%s", errReason(rpc_rsp_msg->rcode()));
+                    ELOG("rpc请求出错：%s", errReason(rpc_rsp_msg->rcode()).c_str());
                     return false;
                 }
                 result = rpc_rsp_msg->result();
@@ -107,7 +107,7 @@ namespace bitrpc
                 }
                 if (rpc_rsp_msg->rcode() != RCode::RCODE_OK)
                 {
-                    ELOG("rpc回调请求出错：%s", errReason(rpc_rsp_msg->rcode()));
+                    ELOG("rpc回调请求出错：%s", errReason(rpc_rsp_msg->rcode()).c_str());
                     return;
                 }
                 cb(rpc_rsp_msg->result());
@@ -122,7 +122,7 @@ namespace bitrpc
                 }
                 if (rpc_rsp_msg->rcode() != RCode::RCODE_OK)
                 {
-                    ELOG("rpc异步请求出错：%s", errReason(rpc_rsp_msg->rcode()));
+                    ELOG("rpc异步请求出错：%s", errReason(rpc_rsp_msg->rcode()).c_str());
                     return;
                 }
                 result->set_value(rpc_rsp_msg->result());

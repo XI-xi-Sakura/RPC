@@ -121,7 +121,7 @@ namespace bitrpc
                 }
                 if (topic_rsp_msg->rcode() != RCode::RCODE_OK)
                 {
-                    ELOG("主题操作请求出错：%s", errReason(topic_rsp_msg->rcode()));
+                    ELOG("主题操作请求出错：%s", errReason(topic_rsp_msg->rcode()).c_str());
                     return false;
                 }
                 return true;

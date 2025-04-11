@@ -7,3 +7,6 @@ rpc_server : rpc_server.cpp
 	g++  -g $(CFLAG) $^ -o $@ $(LFLAG)
 rpc_client : rpc_client.cpp
 	g++  -g $(CFLAG) $^ -o $@ $(LFLAG)
+
+clean:
+	rm -rf reg_server rpc_server rpc_client	
